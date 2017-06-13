@@ -27,9 +27,13 @@ class Ocean:
             none
 
         """
+        self.board = []
         for i in range(0, 10):
+            temp_list = []
             for j in range(0, 10):
-                self.board.append(Square(i, j))
+                temp_list.append(Square(i, j))
+            temp_list.append("\n")
+            self.board.append(temp_list)
 
     def __str__(self):
         """Prints out the ocean object.
@@ -42,14 +46,12 @@ class Ocean:
 
         """
         ocean = ''
-        ocean += '    ABCDEFGHIJ \n'
-        ocean += '   ' + '-' * 12 + '\n'
-        ocean += '1  |'
-        for i in range(len(self.board)):
-            if i % 10 == 0 and i != 0:
-                ocean += '|\n' + '{0:{width}}|'.format(str(int((i + 10)/10)), width=3)
-            ocean += str(self.board[i])
-        ocean += '|\n'
-        ocean += '   ' + '-'*12
+
+        for row in self.board:
+            ocean += '|'
+            row.insert(-1, '|')
+            for square in row:
+                ocean += str(square)
+'
 
         return ocean
