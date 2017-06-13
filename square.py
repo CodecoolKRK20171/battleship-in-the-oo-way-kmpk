@@ -4,7 +4,7 @@ class Square:
 
         self.row = row
         self.column = column
-        self.is_visible = False
+        self.is_visible = True
         self.is_marked = False
         self.is_water = False
         self.is_ship = False
