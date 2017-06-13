@@ -1,3 +1,7 @@
+# Plan:
+# 
+
+
 from ocean import Ocean
 import csv
 import os
