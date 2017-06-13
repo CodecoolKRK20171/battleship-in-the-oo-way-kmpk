@@ -30,3 +30,12 @@ __Instance methods__
 * `mark(self)`
 
   Sets the object's * is_marked * attribute to True
+
+* `show(self)`
+
+  Sets the object's * is_visible * attribute to True
+
+* `__str__(self)`
+
+  Returns a formatted string of * Square * depending on its attributes.
+  "X" for marked, "O" for unmarked, " " for hidden
