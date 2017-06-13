@@ -51,5 +51,5 @@ class Square:
         elif self.is_visible:
             mark = "O"
 
-        colored_mark = apply_color(mark)
+        colored_mark = self.apply_color(mark)
         return colored_mark
