@@ -4,7 +4,7 @@ class Square:
 
         self.row = row
         self.column = column
-        self.is_visible = True
+        self.is_visible = False
         self.is_marked = False
         self.is_water = True
         self.is_ship = False
@@ -20,9 +20,9 @@ class Square:
 
         if self.is_water:
             sign = colors["blue"] + mark + colors["reset"]
-        if self.is_border:
+        elif self.is_border:
             sign = colors["cyan"] + mark + colors["reset"]
-        if self.is_ship:
+        elif self.is_ship:
             sign = colors["green"] + mark + colors["reset"]
 
         return sign
@@ -30,6 +30,7 @@ class Square:
     def mark(self):
 
         self.is_marked = True
+        self.show(self)
 
     def make_ship(self):
 
@@ -45,11 +46,13 @@ class Square:
 
     def __str__(self):
 
-        mark = "-"
+        mark = "O"
         if self.is_marked:
             mark = "X"
-        elif self.is_visible:
-            mark = "O"
+        elif self.is_border:
+            mark = "*"
+        if not self.is_visible:
+            mark = "-"
 
-        colored_mark = apply_color(mark)
+        colored_mark = self.apply_color(mark)
         return colored_mark
