@@ -1,9 +1,11 @@
 from ocean import Ocean
 from player import Player
+from os import system
 
 
 def create_game():
 
+    system("clear")
     determine_number_of_players()
     player_name = ask_for_name()
     player_1 = Player(player_name)
@@ -18,15 +20,15 @@ def create_game():
 def determine_number_of_players():
     print("Mornin' cap'n! How many players will battle? ")
     while True:
-        game_mode = input("'1' for singleplayer, '2' for multiplayer ")
+        game_mode = input("\n'1' for singleplayer, '2' for multiplayer\n")
         if game_mode == "1":
             break
         else:
-            print("Dammit! Unsupported game mode :(")
+            print("\n Dammit! Unsupported game mode :(\n")
 
 
 def ask_for_name():
-    name = input("Ahoy! Wha' be yer name?")
+    name = input("\nAhoy! Wha' be yer name?\n")
     return name
 
 
@@ -46,19 +48,18 @@ def print_boards(board_1, board_2):
 
 def ask_for_positions():
 
-    error_msg = "Yo! Enter correct co-ordinates mate..."
+    error_msg = "\nYo! Enter correct co-ordinates mate...\n"
     while True:
-        target = input("Where do ye wants t' shoot? (eg. a1)")
+        target = input("Where do ye wants t' shoot? (eg. a1)\n")
 
         try:
-            row, column = target[0], int(target[1])
+            row, column = target[0].upper(), int(target[1])
         except IndexError:
             print(error_msg)
         except ValueError:
             print(error_msg)
         else:
-            print(target, len(target), row in "abcdefghij", column in range(0, 10))
-            if len(target) == 2 and row in "abcdefghij" and column in range(0, 10):
+            if len(target) == 2 and row in "ABCDEFGHIJ" and column in range(0, 10):
                 break
             else:
                 print(error_msg)
@@ -71,13 +72,14 @@ def main():
     board1.fill_board()
     board2.fill_board()
     while True:
+        system("clear")
         print_boards(board1, board2)
         # jakieś komunikaty, pytanie o pozycje
-        x, y = ask_for_positions()
-        shoot = player1.shoot_on_board(board2, x, y)
+        target = ask_for_positions()
+        shoot = player1.shoot_on_board(board2, target)
         # jakiś komunikat
-        x, y = ask_for_positions()
-        shoot = player2.shoot_on_board(board1, x, y)
+        target = ask_for_positions()
+        shoot = player2.shoot_on_board(board1, target)
         # jakiś komunikat
         check_end_game(player1, player2)
 
