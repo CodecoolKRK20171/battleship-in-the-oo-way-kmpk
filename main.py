@@ -13,6 +13,8 @@ def create_game():
     # kreacja startowego boardu
     board_1 = Ocean(player_1)
     board_2 = Ocean(player_2)
+    board1.fill_board()
+    board2.fill_board()
 
     return board_1, board_2, player_1, player_2
 
@@ -60,26 +62,24 @@ def ask_for_positions():
             print(error_msg)
         else:
             if len(target) == 2 and row in "ABCDEFGHIJ" and column in range(0, 10):
+                target = row.upper() + str(column)
                 break
             else:
                 print(error_msg)
-
     return target
 
 
 def main():
+
     board1, board2, player1, player2 = create_game()
-    board1.fill_board()
-    board2.fill_board()
     while True:
         system("clear")
         print_boards(board1, board2)
         # jakieś komunikaty, pytanie o pozycje
         target = ask_for_positions()
-        shoot = player1.shoot_on_board(board2, target)
+        shoot = player1.shoot_on_board_player(board2, target)
         # jakiś komunikat
-        target = ask_for_positions()
-        shoot = player2.shoot_on_board(board1, target)
+        shoot = player2.shoot_on_board_ai(board1)
         # jakiś komunikat
         check_end_game(player1, player2)
 

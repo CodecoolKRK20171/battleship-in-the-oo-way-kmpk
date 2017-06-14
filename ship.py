@@ -1,5 +1,4 @@
 
-
 class Ship:
 
     ships = {"Carrier": 5, "Battleship": 4, "Cruiser": 3, "Submarine": 3, "Destroyer": 2}
@@ -14,11 +13,6 @@ class Ship:
         self.coordinates = Ship.create_ship(self.start_position, self.is_horizontal, self.size)
         self.sunk = False
         Ship.taken_coord_list += self.coordinates
-        # Ship.taken_coord_list +=
-
-
-#dodawanie koordynatow wokol statku
-#uniemozliwic dodawanie statkow poza ekran
 
 
     def create_ship(start_position, is_horizontal, size):
@@ -32,18 +26,19 @@ class Ship:
 
         return coordinates
 
-    # def check_availability(self):
-    #     pass
+    # def check_availability(coords_taken, coord_to_check):
+    #     for coord in coord_to_check:
+    #         if (coord not in coords_taken and coord
 
-
-    # def add_coord_around_ship(coordinates):
-    #     additional_coord = []
-    #     for coord in coordinates:
-    #         print("koord",coord)
-    #         for i in range(-1, 2):
-    #             print(coord[0]+i, coord[1]+i)
-    #             # print(coord[1]+i)
-    #     print(additional_coord)
+    def add_coord_around_ship(coordinates):
+        additional_coord = []
+        for coord in coordinates:
+            for x in range(-1, 2):
+                for y in range(-1, 2, 1):
+                    coord_to_add = (coord[0]+x, coord[1]+y)
+                    if coord_to_add not in additional_coord:
+                        additional_coord.append(coord_to_add)
+        return additional_coord
 
 
 # for i in range(-1,2):
