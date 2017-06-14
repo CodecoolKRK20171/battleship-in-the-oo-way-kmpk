@@ -81,7 +81,7 @@ def check_end_game(player_1, player_2):
     if not player_1.is_alive:
         read_ascii('lose_screen.csv')
     if not player_2.is_alive:
-        read_ascii('win.csv')
+        read_ascii('win_screen.csv')
 
 
 def print_boards(board_1, board_2):
