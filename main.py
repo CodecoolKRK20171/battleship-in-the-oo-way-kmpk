@@ -25,7 +25,6 @@ def create_game():
     board_2 = Ocean(player_2)
     while Ship.ships:
         name = add_ships(board_2)
-        del Ship.ships[name]
     board_1.fill_board()
     board_2.fill_board()
 
@@ -51,7 +50,7 @@ def add_ships(board):
     while pos_y not in range(1, 11):
         pos_y = int(input('Please enter a correct Y position: '))
 
-    start_position = (pos_x, pos_y)
+    start_position = (pos_x+1, pos_y)
 
     horizontal = input('Do you want the ship to be placed horizontallyt? (y/n): ')
     while horizontal not in 'yn':
@@ -62,12 +61,15 @@ def add_ships(board):
     else:
         horizontal = False
 
-    name = input('Choose the ship kind (Carrier, Battleship, Cruiser): ')
+    name = input('Choose the ship kind {0}'.format(Ship.ships.keys()))
     while name not in Ship.ships.keys():
         name = input('Enter the right ship name: ')
 
-    ship1 = Ship(start_position, horizontal, name)
-    board.ships.append(ship1)
+    if Ship.create_ship(start_position, horizontal, Ship.ships[name]):
+        ship1 = Ship(start_position, horizontal, name)
+        board.ships.append(ship1)
+        del Ship.ships[name]
+
 
     return name
 

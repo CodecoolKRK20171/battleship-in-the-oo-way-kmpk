@@ -45,6 +45,7 @@ class Ocean:
 
         for ship in self.ships:
             for square in ship.coordinates:
+                print (square)
                 self.board[square[1]][square[0]].make_ship()
 
     def __str__(self):
