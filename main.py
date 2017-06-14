@@ -16,7 +16,7 @@ def read_ascii(file_name):
 def create_game():
 
     system("clear")
-    read_ascii()
+    read_ascii("ship.csv")
     determine_number_of_players()
     player_name = ask_for_name()
     player_1 = Player(player_name)
@@ -52,7 +52,7 @@ def add_ships(board):
 
     start_position = (pos_x+1, pos_y)
 
-    horizontal = input('Do you want the ship to be placed horizontallyt? (y/n): ')
+    horizontal = input('Do you want the ship to be placed vertically? (y/n): ')
     while horizontal not in 'yn':
         horizontal = input('Please enter the right option: ')
 
@@ -69,7 +69,6 @@ def add_ships(board):
         ship1 = Ship(start_position, horizontal, name)
         board.ships.append(ship1)
         del Ship.ships[name]
-
 
     return name
 
