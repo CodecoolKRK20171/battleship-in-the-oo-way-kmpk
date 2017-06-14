@@ -1,7 +1,11 @@
 
 class Ship:
 
-    ships = {"Carrier": 5, "Battleship": 4, "Cruiser": 3, "Submarine": 3, "Destroyer": 2}
+    ships = {"Carrier": 5,
+             "Battleship": 4,
+             "Cruiser": 3,
+             "Submarine": 3,
+             "Destroyer": 2}
     taken_coord_list = []  # lista tupli koordynatow ktore sa zakazane
 
     def __init__(self, start_position, is_vertical, name):
@@ -62,7 +66,12 @@ class Ship:
                 taken_coord_list.append(coord)
 
     @classmethod
-    def clear_list(cls):
+    def set_lists_to_default(cls):
+        cls.ships = {"Carrier": 5,
+                     "Battleship": 4,
+                     "Cruiser": 3,
+                     "Submarine": 3,
+                     "Destroyer": 2}
         cls.taken_coord_list = []
 
 # todo, lista tupli koordynatow ktore sa wokol statku ale nie moga byc poza plansza

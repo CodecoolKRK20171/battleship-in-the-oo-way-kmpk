@@ -13,8 +13,10 @@ class Player:
 
     def shoot_on_board_player(self, battlefield, coords):
 
-        pos_x, pos_y = common.convert_coords(coords)
+        pos_y, pos_x = common.convert_coords(coords)
         target = battlefield.board[pos_x][pos_y]
+        print(pos_x, pos_y)
+        print(target.__dict__)
 
         if target.is_ship:
             target.mark()

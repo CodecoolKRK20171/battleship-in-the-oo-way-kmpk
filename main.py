@@ -37,12 +37,14 @@ def create_game():
 def set_up_board(battlefield, player):
 
     if player.name == "AI" or player.name == "Cheat":
-        Ship.clear_list()
+        Ship.set_lists_to_default()
         ships_list = Ship.ships
+        print("nazwy", ships_list)
         while ships_list:
             add_ships_ai(battlefield, ships_list)
+            battlefield.fill_ship()
     else:
-        Ship.clear_list()
+        Ship.set_lists_to_default()
         ships_list = Ship.ships
         while ships_list:
             add_ships_player(battlefield, ships_list)

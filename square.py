@@ -3,7 +3,7 @@ import common
 
 class Square:
 
-    def __init__(self, row, column, is_visible=True):
+    def __init__(self, row, column, is_visible=False):
 
         self.row = row
         self.column = column
@@ -52,12 +52,12 @@ class Square:
 
     def __str__(self):
 
-        mark = "-"
+        mark = "."
         if self.is_ship:
             mark = "S"
         if self.is_marked:
             mark = "X"
-        elif self.is_border:
+        if self.is_border:
             mark = "*"
         if not self.is_visible:
             mark = "-"
