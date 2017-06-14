@@ -16,21 +16,27 @@ class Ship:
         surroundings = Ship.add_coord_around_ship(self.coordinates)  # coords of ships surroundings
         Ship.add_coord_not_repetitive(Ship.taken_coord_list, surroundings)
 
+
+
     def create_ship(start_position, is_horizontal, size):
         coordinates = []
         if is_horizontal:
             for i in range(size):
-                coordinates.append((start_position[0], i))
+                coordinates.append((start_position[0], start_position[1]+i))
         else:
             for i in range(size):
                 coordinates.append((start_position[0]+i, start_position[1]))
 
-        return coordinates
-
+        if Ship.check_availability(Ship.taken_coord_list, coordinates):
+            print(coordinates)
+            return coordinates
+        else:
+            return False
+            return Ship.taken_coord_list[0]
     def check_availability(coords_taken, coord_to_check):
         # params: lists of tuples
         for coord in coord_to_check:
-            print(coord)
+            # print(coord)
             if coord not in coords_taken and \
                     0 < coord[0] < 10 and \
                     0 < coord[1] < 10:
@@ -42,9 +48,12 @@ class Ship:
 
     def add_coord_around_ship(coordinates):
         additional_coord = []
+        # print(type(coordinates[0][0]))
+        # print(coordinates)
         for coord in coordinates:
             for x in range(-1, 2):
                 for y in range(-1, 2, 1):
+                    # print(type(coord[0]), coord[0])
                     coord_to_add = (coord[0]+x, coord[1]+y)
                     if coord_to_add not in additional_coord:
                         additional_coord.append(coord_to_add)

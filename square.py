@@ -4,7 +4,7 @@ class Square:
 
         self.row = row
         self.column = column
-        self.is_visible = False
+        self.is_visible = True
         self.is_marked = False
         self.is_water = True
         self.is_ship = False
@@ -31,7 +31,7 @@ class Square:
     def mark(self):
 
         self.is_marked = True
-        self.show(self)
+        self.show()
 
     def make_ship(self):
 

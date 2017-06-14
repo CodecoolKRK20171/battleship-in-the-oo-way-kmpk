@@ -1,12 +1,13 @@
 from ocean import Ocean
 from player import Player
+from ship import Ship
 from os import system
 import csv
 
 
-def read_ascii():
+def read_ascii(file_name):
 
-    with open('ship.csv', 'r') as f:
+    with open(file_name, 'r') as f:
         r = csv.reader(f)
         for row in r:
             print("".join(row))
@@ -15,14 +16,15 @@ def read_ascii():
 def create_game():
 
     system("clear")
-    read_ascii()
+    read_ascii("ship.csv")
     determine_number_of_players()
     player_name = ask_for_name()
     player_1 = Player(player_name)
     player_2 = Player("AI")
-    # kreacja startowego boardu
     board_1 = Ocean(player_1)
     board_2 = Ocean(player_2)
+    while Ship.ships:
+        name = add_ships(board_2)
     board_1.fill_board()
     board_2.fill_board()
 
@@ -41,7 +43,34 @@ def determine_number_of_players():
 
 
 def add_ships(board):
-    pass
+    pos_x = int(input('Enter new ship X position: '))
+    while pos_x not in range(1, 11):
+        pos_x = int(input('Please enter a correct X position: '))
+    pos_y = int(input('Enter new ship Y position: '))
+    while pos_y not in range(1, 11):
+        pos_y = int(input('Please enter a correct Y position: '))
+
+    start_position = (pos_x+1, pos_y)
+
+    horizontal = input('Do you want the ship to be placed vertically? (y/n): ')
+    while horizontal not in 'yn':
+        horizontal = input('Please enter the right option: ')
+
+    if horizontal == 'y':
+        horizontal = True
+    else:
+        horizontal = False
+
+    name = input('Choose the ship kind {0}'.format(Ship.ships.keys()))
+    while name not in Ship.ships.keys():
+        name = input('Enter the right ship name: ')
+
+    if Ship.create_ship(start_position, horizontal, Ship.ships[name]):
+        ship1 = Ship(start_position, horizontal, name)
+        board.ships.append(ship1)
+        del Ship.ships[name]
+
+    return name
 
 
 def ask_for_name():
@@ -51,9 +80,9 @@ def ask_for_name():
 
 def check_end_game(player_1, player_2):
     if not player_1.is_alive:
-        show_lose_screen()
+        read_ascii('lose_screen.csv')
     if not player_2.is_alive:
-        show_win_screen()
+        read_ascii('win_screen.csv')
 
 
 def print_boards(board_1, board_2):
@@ -103,10 +132,6 @@ def main():
         print_boards(board_1, board_2)
         handle_shooting_phase(board_1, board_2, player_1, player_2)
         check_end_game(player_1, player_2)
-
-
-def show_lose_screen():
-    pass
 
 
 if __name__ == "__main__":
