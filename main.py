@@ -86,9 +86,5 @@ def show_lose_screen():
     pass
 
 
-def show_win_screen():
-    pass
-
-
 if __name__ == "__main__":
     main()
