@@ -72,7 +72,6 @@ def add_ships(board):
         board.ships.append(ship1)
         del Ship.ships[name]
 
-
     return name
 
 
