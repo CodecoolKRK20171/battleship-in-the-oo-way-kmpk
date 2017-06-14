@@ -37,6 +37,7 @@ def determine_number_of_players():
             break
         else:
             print("\n Dammit! Unsupported game mode :(\n")
+    return game_mode
 
 
 def ask_for_name():
@@ -84,19 +85,20 @@ def ask_for_positions():
     return target
 
 
+def handle_shooting_phase(board_1, board_2, player_1, player_2):
+    target = ask_for_positions()
+    player_1.shoot_on_board_player(board_2, target)
+    player_2.shoot_on_board_ai(board_1)
+
+
 def main():
 
-    board1, board2, player1, player2 = create_game()
+    board_1, board_2, player_1, player_2 = create_game()
     while True:
         system("clear")
-        print_boards(board1, board2)
-        # jakieś komunikaty, pytanie o pozycje
-        target = ask_for_positions()
-        shoot = player1.shoot_on_board_player(board2, target)
-        # jakiś komunikat
-        shoot = player2.shoot_on_board_ai(board1)
-        # jakiś komunikat
-        check_end_game(player1, player2)
+        print_boards(board_1, board_2)
+        handle_shooting_phase(board_1, board_2, player_1, player_2)
+        check_end_game(player_1, player_2)
 
 
 def show_lose_screen():

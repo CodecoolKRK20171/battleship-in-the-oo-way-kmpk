@@ -18,8 +18,10 @@ class Player:
             board.board[int(position[1])][letters[position[0]]].show()
 
     def shoot_on_board_ai(self, board):
-        position_x = randint(1, 11)
-        position_y = randint(1, 11)
+        position_x = randint(2, 11)
+        position_y = randint(0, 9)
+
+        print(position_x,position_y)
 
         if board.board[position_y][position_x].is_ship:
             board.board[position_y][position_x].mark()

@@ -12,7 +12,7 @@ class Ship:
         self.is_horizontal = is_horizontal  # bool
         self.coordinates = Ship.create_ship(self.start_position, self.is_horizontal, self.size)  # list of tuple
         self.sunk = False
-        Ship.taken_coord_list += self.coordinates # adds coordinates of created ship to taken_coord_list
+        Ship.taken_coord_list += self.coordinates  # adds coordinates of created ship to taken_coord_list
         Ship.taken_coord_list += Ship.add_coord_around_ship(self.coordinates)
 
     def create_ship(start_position, is_horizontal, size):
