@@ -1,5 +1,6 @@
 from ocean import Ocean
 from player import Player
+from ship import Ship
 from os import system
 import csv
 
@@ -20,9 +21,11 @@ def create_game():
     player_name = ask_for_name()
     player_1 = Player(player_name)
     player_2 = Player("AI")
-    # kreacja startowego boardu
     board_1 = Ocean(player_1)
     board_2 = Ocean(player_2)
+    while Ship.ships:
+        name = add_ships(board_2)
+        del Ship.ships[name]
     board_1.fill_board()
     board_2.fill_board()
 
@@ -37,6 +40,36 @@ def determine_number_of_players():
             break
         else:
             print("\n Dammit! Unsupported game mode :(\n")
+    return game_mode
+
+
+def add_ships(board):
+    pos_x = int(input('Enter new ship X position: '))
+    while pos_x not in range(1, 11):
+        pos_x = int(input('Please enter a correct X position: '))
+    pos_y = int(input('Enter new ship Y position: '))
+    while pos_y not in range(1, 11):
+        pos_y = int(input('Please enter a correct Y position: '))
+
+    start_position = (pos_x, pos_y)
+
+    horizontal = input('Do you want the ship to be placed horizontallyt? (y/n): ')
+    while horizontal not in 'yn':
+        horizontal = input('Please enter the right option: ')
+
+    if horizontal == 'y':
+        horizontal = True
+    else:
+        horizontal = False
+
+    name = input('Choose the ship kind (Carrier, Battleship, Cruiser): ')
+    while name not in Ship.ships.keys():
+        name = input('Enter the right ship name: ')
+
+    ship1 = Ship(start_position, horizontal, name)
+    board.ships.append(ship1)
+
+    return name
 
 
 def ask_for_name():
@@ -84,19 +117,20 @@ def ask_for_positions():
     return target
 
 
+def handle_shooting_phase(board_1, board_2, player_1, player_2):
+    target = ask_for_positions()
+    player_1.shoot_on_board_player(board_2, target)
+    player_2.shoot_on_board_ai(board_1)
+
+
 def main():
 
-    board1, board2, player1, player2 = create_game()
+    board_1, board_2, player_1, player_2 = create_game()
     while True:
         system("clear")
-        print_boards(board1, board2)
-        # jakieś komunikaty, pytanie o pozycje
-        target = ask_for_positions()
-        shoot = player1.shoot_on_board_player(board2, target)
-        # jakiś komunikat
-        shoot = player2.shoot_on_board_ai(board1)
-        # jakiś komunikat
-        check_end_game(player1, player2)
+        print_boards(board_1, board_2)
+        handle_shooting_phase(board_1, board_2, player_1, player_2)
+        check_end_game(player_1, player_2)
 
 
 def show_lose_screen():
