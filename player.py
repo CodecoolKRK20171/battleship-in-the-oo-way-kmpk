@@ -1,5 +1,6 @@
 # from ocean import Ocean
 # from ship import Ship
+from random import choose
 
 
 class Player:
@@ -15,6 +16,19 @@ class Player:
             board.board[int(position[1])][letters[position[0]]].mark()
         else:
             board.board[int(position[1])][letters[position[0]]].show()
+
+    def AI(self,board):
+        position_x = random.randint(1, 11)
+        position_y = random.randint(1, 11)
+
+        if board.board[position_y][position_x].is_ship:
+            board.board[position_y][position_x].mark()
+
+        else:
+            board.board[position_y][position_x].show()
+
+
+
 
     def is_alive(self, board):
         available_square_ship = 0
