@@ -41,11 +41,8 @@ class Ocean:
 
             row.insert(0, index)
             row.insert(1, '|')
-            row.insert(-1, '|')
+            row.append('|')
             index += 1
-
-
-
 
     def __str__(self):
         """Prints out the ocean object.
