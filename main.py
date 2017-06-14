@@ -1,79 +1,58 @@
-# Plan:
-#
-
-
 from ocean import Ocean
-import csv
-import os
-import sys
+from player import Player
 
 
-def make_ship_from_csv():
-    """Prints a ship from a csv file
+def create_game():
+    # pytaj o ilość graczy
+    # pytaj o imię
+    player1 = Player("Gracz")
+    player2 = Player("AI")
+    # kreacja startowego boardu
+    board1 = Ocean(player1)
+    board2 = Ocean(player2)
 
-    Args:
-        none
-
-    Returns:
-        none
-
-    """
-    with open("ship.csv", 'r') as f:
-        r = csv.reader(f)
-        for row in r:
-            print("".join(row))
+    return board1, board2, player1, player2
 
 
-def menu():
-    """Prints out a menu for the user.
-
-    Args:
-        none
-
-    Returns:
-        none
-
-    """
-
-    os.system('clear')
-    make_ship_from_csv()
-
-    print('\nWelcome to battleships!')
-    start = input('\nDo you want to start the game? (y/n): ')
-    while start not in ['y', 'n']:
-        start = input('\nPlease enter the right option: ')
-
-    if start == 'y':
-        handle_game()
-    else:
-        sys.exit()
+def check_end_game(player1, player2):
+    if not player1.is_alive:
+        show_lose_screen()
+    if not player2.is_alive:
+        show_win_screen()
 
 
-def handle_game():
-    """Functio handles battleships game.
+def print_boards(board1, board2):
+    # board1.fill_board()
+    print(board1)
+    # board2.fill_board()
+    print(board2)
 
-    Args:
-        board: Game board.
 
-    Returns:
-        none
-
-    """
-
-    os.system('clear')
-
-    bajer = Ocean()
-    bajer.fill_board()
-
-    print(bajer)
+def ask_for_positions():
+    x = input("X ")
+    y = input("Y ")
+    return int(x), int(y)
 
 
 def main():
+    board1, board2, player1, player2 = create_game()
+    board1.fill_board()
+    board2.fill_board()
+    while True:
+        print_boards(board1, board2)
+        # jakieś komunikaty, pytanie o pozycje
+        x, y = ask_for_positions()
+        shoot = player1.shoot_on_board(board2, x, y)
+        # jakiś komunikat
+        x, y = ask_for_positions()
+        shoot = player2.shoot_on_board(board1, x, y)
+        # jakiś komunikat
+        check_end_game(player1, player2)
 
-    menu()
 
-    handle_game()
+def show_lose_screen():
+    pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ from square import Square
 
 class Ocean:
 
-    def __init__(self):
+    def __init__(self, position):
         """Initialize function. Responsible for handling the playable area.
 
         Args:
@@ -32,8 +32,20 @@ class Ocean:
             temp_list = []
             for j in range(0, 10):
                 temp_list.append(Square(i, j))
-            temp_list.append("\n")
             self.board.append(temp_list)
+
+        self.board2 = self.board[:]
+        index = 0
+
+        for row in self.board2:
+
+            row.insert(0, index)
+            row.insert(1, '|')
+            row.insert(-1, '|')
+            index += 1
+
+
+
 
     def __str__(self):
         """Prints out the ocean object.
@@ -50,16 +62,10 @@ class Ocean:
         ocean += '  ABCDEFGHIJ \n'
         ocean += ' ' + '-' * 12 + '\n'
 
-        for row in self.board:
-
-            row.insert(0, index)
-            row.insert(1, '|')
-            row.insert(-1, '|')
-            index += 1
-
+        for row in self.board2:
             for square in row:
                 ocean += str(square)
-
+            ocean += '\n'
         ocean += ' ' + '-' * 12 + '\n'
 
         return ocean
