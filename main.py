@@ -16,7 +16,7 @@ def read_ascii(file_name):
 def create_game():
 
     system("clear")
-    read_ascii("ship.csv")
+    read_ascii('ship.csv')
     determine_number_of_players()
     player_name = ask_for_name()
     player_1 = Player(player_name)
@@ -25,8 +25,10 @@ def create_game():
     board_2 = Ocean(player_2)
     while Ship.ships:
         name = add_ships(board_2)
+        board_2.fill_board()
+        board_2.fill_ship()
+        print(board_2)
     board_1.fill_board()
-    board_2.fill_board()
 
     return board_1, board_2, player_1, player_2
 
@@ -44,15 +46,15 @@ def determine_number_of_players():
 
 def add_ships(board):
     pos_x = int(input('Enter new ship X position: '))
-    while pos_x not in range(1, 11):
+    while pos_x not in range(0, 11):
         pos_x = int(input('Please enter a correct X position: '))
     pos_y = int(input('Enter new ship Y position: '))
-    while pos_y not in range(1, 11):
+    while pos_y not in range(0, 11):
         pos_y = int(input('Please enter a correct Y position: '))
 
-    start_position = (pos_x+1, pos_y)
+    start_position = (pos_x + 1, pos_y)
 
-    horizontal = input('Do you want the ship to be placed vertically? (y/n): ')
+    horizontal = input('Do you want the ship to be placed vertical? (y/n): ')
     while horizontal not in 'yn':
         horizontal = input('Please enter the right option: ')
 
@@ -81,9 +83,10 @@ def ask_for_name():
 def check_end_game(player_1, player_2):
     if not player_1.is_alive:
         read_ascii('lose_screen.csv')
+        sys.exit()
     if not player_2.is_alive:
         read_ascii('win_screen.csv')
-
+        sys.exit()
 
 def print_boards(board_1, board_2):
 

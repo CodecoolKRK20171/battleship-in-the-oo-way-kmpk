@@ -1,4 +1,5 @@
 from square import Square
+from copy import deepcopy
 
 
 class Ocean:
@@ -33,7 +34,7 @@ class Ocean:
                 temp_list.append(Square(i, j))
             self.board.append(temp_list)
 
-        self.board2 = self.board[:]
+        self.board2 = deepcopy(self.board)
         index = 0
 
         for row in self.board2:
@@ -43,11 +44,11 @@ class Ocean:
             row.append('║')
             index += 1
 
-    def fill_ship():
+    def fill_ship(self):
         for ship in self.ships:
             for square in ship.coordinates:
-                print(square)
                 self.board[square[1]][square[0]].make_ship()
+                self.board2[square[1]][square[0]].make_ship()
 
     def __str__(self):
         """Prints out the ocean object.
