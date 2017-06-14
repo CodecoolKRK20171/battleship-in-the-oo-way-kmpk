@@ -12,10 +12,10 @@ class Player:
     def shoot_on_board_player(self, board, position):
         letters = {'A': 2, 'B': 3, 'C': 4, 'D': 5, 'E': 6, 'F': 7, 'G': 8, 'H': 9, 'I': 10, 'J': 11}
 
-        if board.board[int(position[1])][letters[position[0]]].is_ship:
-            board.board[int(position[1])][letters[position[0]]].mark()
+        if board.board2[int(position[1])][letters[position[0]]].is_ship:
+            board.board2[int(position[1])][letters[position[0]]].mark()
         else:
-            board.board[int(position[1])][letters[position[0]]].show()
+            board.board2[int(position[1])][letters[position[0]]].show()
 
     def shoot_on_board_ai(self, board):
         ai = AI()
