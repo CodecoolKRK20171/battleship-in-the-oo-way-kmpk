@@ -1,11 +1,21 @@
 from ocean import Ocean
 from player import Player
 from os import system
+import csv
+
+
+def read_ascii():
+
+    with open('ship.csv', 'r') as f:
+        r = csv.reader(f)
+        for row in r:
+            print("".join(row))
 
 
 def create_game():
 
     system("clear")
+    read_ascii()
     determine_number_of_players()
     player_name = ask_for_name()
     player_1 = Player(player_name)
@@ -20,7 +30,7 @@ def create_game():
 
 
 def determine_number_of_players():
-    print("Mornin' cap'n! How many players will battle? ")
+    print("\nMornin' cap'n! How many players will battle? ")
     while True:
         game_mode = input("\n'1' for singleplayer, '2' for multiplayer\n")
         if game_mode == "1":
