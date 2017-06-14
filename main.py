@@ -39,6 +39,10 @@ def determine_number_of_players():
             print("\n Dammit! Unsupported game mode :(\n")
 
 
+def add_ships(board):
+    pass
+
+
 def ask_for_name():
     name = input("\nAhoy! Wha' be yer name?\n")
     return name
