@@ -1,27 +1,34 @@
 # from ocean import Ocean
 # from ship import Ship
 from ai import AI
+import common
 
 
 class Player:
 
     def __init__(self, name):
+
         self.name = name
         self.is_alive = True
 
-    def shoot_on_board_player(self, board, position):
-        letters = {'A': 2, 'B': 3, 'C': 4, 'D': 5, 'E': 6, 'F': 7, 'G': 8, 'H': 9, 'I': 10, 'J': 11}
+    def shoot_on_board_player(self, battlefield, coords):
 
-        if board.board2[int(position[1])][letters[position[0]]].is_ship:
-            board.board2[int(position[1])][letters[position[0]]].mark()
+        pos_x, pos_y = common.convert_coords(coords)
+        target = battlefield.board[pos_x][pos_y]
+
+        if target.is_ship:
+            target.mark()
         else:
-            board.board2[int(position[1])][letters[position[0]]].show()
+            target.show()
 
     def shoot_on_board_ai(self, board):
+
         ai = AI()
-        ai.shoot_on_board_ai(board)
+        target = ai.shoot_on_board_ai(board)
+        return target
 
     def is_alive(self, board):
+
         available_square_ship = 0
         for row in board:
             for column in row:
@@ -31,3 +38,6 @@ class Player:
             return False
         else:
             return True
+
+    def __str__(self):
+        return str(self.name)

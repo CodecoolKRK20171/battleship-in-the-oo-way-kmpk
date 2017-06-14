@@ -3,6 +3,8 @@ from player import Player
 from ship import Ship
 from os import system
 import csv
+import common
+import random
 
 
 def read_ascii(file_name):
@@ -17,23 +19,38 @@ def create_game():
 
     system("clear")
     read_ascii('ship.csv')
-    determine_number_of_players()
+    # determine_number_of_players()
     player_name = ask_for_name()
-    player_1 = Player(player_name)
-    player_2 = Player("AI")
-    board_1 = Ocean(player_1)
-    board_2 = Ocean(player_2)
-    while Ship.ships:
-        name = add_ships(board_2)
-        board_2.fill_board()
-        board_2.fill_ship()
-        print(board_2)
-    board_1.fill_board()
+    player_1st = Player(player_name)
+    player_2nd = Player("AI")
+    battlefield_1st = Ocean(player_1st)
+    battlefield_2nd = Ocean(player_2nd)
+    system("clear")
+    battlefield_1st.fill_board()
+    set_up_board(battlefield_1st, player_1st)
+    battlefield_2nd.fill_board()
+    set_up_board(battlefield_2nd, player_2nd)
 
-    return board_1, board_2, player_1, player_2
+    return battlefield_1st, battlefield_2nd, player_1st, player_2nd
+
+
+def set_up_board(battlefield, player):
+
+    if player.name == "AI" or player.name == "Cheat":
+        Ship.clear_list()
+        ships_list = Ship.ships
+        while ships_list:
+            add_ships_ai(battlefield, ships_list)
+    else:
+        Ship.clear_list()
+        ships_list = Ship.ships
+        while ships_list:
+            add_ships_player(battlefield, ships_list)
+            battlefield.fill_ship()
 
 
 def determine_number_of_players():
+
     print("\nMornin' cap'n! How many players will battle? ")
     while True:
         game_mode = input("\n'1' for singleplayer, '2' for multiplayer\n")
@@ -44,97 +61,130 @@ def determine_number_of_players():
     return game_mode
 
 
-def add_ships(board):
-    pos_x = int(input('Enter new ship X position: '))
-    while pos_x not in range(0, 11):
-        pos_x = int(input('Please enter a correct X position: '))
-    pos_y = int(input('Enter new ship Y position: '))
-    while pos_y not in range(0, 11):
-        pos_y = int(input('Please enter a correct Y position: '))
+def choose_positions():
 
-    start_position = (pos_x + 1, pos_y)
+    while True:
+        choice = input("\nPick a starting point (eg. a1) ")
+        if choice in common.get_possible_coords():
+            break
+        else:
+            print("\nYo! That's nah a proper input dude...\n")
+    return choice
 
-    horizontal = input('Do you want the ship to be placed vertical? (y/n): ')
-    while horizontal not in 'yn':
-        horizontal = input('Please enter the right option: ')
 
-    if horizontal == 'y':
-        horizontal = True
+def chose_direction():
+
+    choice = input('\nDo you want the ship to be placed vertical? (y/n): ')
+    while choice not in 'yn':
+        choice = input('Please enter the right option: ')
+
+    if choice == 'y':
+        return True
     else:
-        horizontal = False
+        return False
 
-    name = input('Choose the ship kind {0}'.format(Ship.ships.keys()))
-    while name not in Ship.ships.keys():
+
+def choose_name():
+
+    possible_names = [key for key in Ship.ships.keys()]
+    colors = common.add_colors()
+    formatted_names = colors["red"] + "'" + "', '".join(possible_names) + "'" + colors["reset"]
+
+    name = input('Choose the ship kind, out of: {} '.format(formatted_names))
+    while name.title() not in Ship.ships.keys():
         name = input('Enter the right ship name: ')
 
-    if Ship.create_ship(start_position, horizontal, Ship.ships[name]):
-        ship1 = Ship(start_position, horizontal, name)
-        board.ships.append(ship1)
-        del Ship.ships[name]
+    return name.title()
 
-    return name
+
+def add_ships_player(board, ships_list):
+
+    print(board)
+
+    name = choose_name()
+    starting_point = choose_positions()
+    start_position = common.convert_coords(starting_point)
+    direction = chose_direction()
+
+    if Ship.create_ship(start_position, direction, Ship.ships[name]):
+        new_ship = Ship(start_position, direction, name)
+        board.ships.append(new_ship)
+        print("\nAye aye! {} succesfully placed!\n".format(name))
+        del ships_list[name]
+    else:
+        print("\nSire, ye can nah put it thar...\n")
+
+
+def add_ships_ai(board, ships_list):
+
+    possible_names = [key for key in Ship.ships.keys()]
+    name = random.choice(possible_names)
+
+    starting_point = random.choice(common.get_possible_coords())
+    start_position = common.convert_coords(starting_point)
+
+    direction = random.choice([True, False])
+
+    if Ship.create_ship(start_position, direction, Ship.ships[name]):
+        new_ship = Ship(start_position, direction, name)
+        board.ships.append(new_ship)
+        del ships_list[name]
 
 
 def ask_for_name():
-    name = input("\nAhoy! Wha' be yer name?\n")
-    return name
+
+    while True:
+        name = input("\nAhoy! Wha' be yer name?\n")
+        # if name != "AI":
+        #     return name
+        return name
 
 
-def check_end_game(player_1, player_2):
-    if not player_1.is_alive:
+def check_end_game(player_1st, player_2nd):
+    if not player_1st.is_alive:
         read_ascii('lose_screen.csv')
         sys.exit()
-    if not player_2.is_alive:
+    if not player_2nd.is_alive:
         read_ascii('win_screen.csv')
         sys.exit()
 
-def print_boards(board_1, board_2):
 
-    colors = {"blue": "\033[1;34m",
-              "yellow": "\033[1;33m",
-              "reset": "\033[0;0m"}
+def print_boards(battlefield_1st, battlefield_2nd):
+
+    colors = common.add_colors()
 
     print(colors["yellow"] + "  * * * YOUR BOARD * * *  \n" + colors["reset"])
-    print(board_1)
+    print(battlefield_1st)
     print(colors["yellow"] + " * * * ENEMY BOARD * * *  \n" + colors["reset"])
-    print(board_2)
+    print(battlefield_2nd)
 
 
 def ask_for_positions():
 
-    error_msg = "\nYo! Enter correct co-ordinates mate...\n"
     while True:
         target = input("Where do ye wants t' shoot? (eg. a1)\n")
-
-        try:
-            row, column = target[0].upper(), int(target[1])
-        except IndexError:
-            print(error_msg)
-        except ValueError:
-            print(error_msg)
+        if target in common.get_possible_coords():
+            break
         else:
-            if len(target) == 2 and row in "ABCDEFGHIJ" and column in range(0, 10):
-                target = row.upper() + str(column)
-                break
-            else:
-                print(error_msg)
+            print("\nYo! Enter correct coords mate...\n")
     return target
 
 
-def handle_shooting_phase(board_1, board_2, player_1, player_2):
+def handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd):
     target = ask_for_positions()
-    player_1.shoot_on_board_player(board_2, target)
-    player_2.shoot_on_board_ai(board_1)
+    player_1st.shoot_on_board_player(battlefield_2nd, target)
+    ai_target = player_2nd.shoot_on_board_ai(battlefield_1st)
+    # print("AI shot on {} {}".format(ai_target[0], ai_target[1]))
 
 
 def main():
 
-    board_1, board_2, player_1, player_2 = create_game()
+    battlefield_1st, battlefield_2nd, player_1st, player_2nd = create_game()
     while True:
         system("clear")
-        print_boards(board_1, board_2)
-        handle_shooting_phase(board_1, board_2, player_1, player_2)
-        check_end_game(player_1, player_2)
+        print_boards(battlefield_1st, battlefield_2nd)
+        handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd)
+        check_end_game(player_1st, player_2nd)
 
 
 if __name__ == "__main__":

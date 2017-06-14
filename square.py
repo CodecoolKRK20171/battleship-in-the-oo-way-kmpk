@@ -1,10 +1,13 @@
+import common
+
+
 class Square:
 
-    def __init__(self, row, column):
+    def __init__(self, row, column, is_visible=True):
 
         self.row = row
         self.column = column
-        self.is_visible = False
+        self.is_visible = is_visible
         self.is_marked = False
         self.is_water = True
         self.is_ship = False
@@ -12,11 +15,7 @@ class Square:
 
     def apply_color(self, mark):
 
-        colors = {"blue": "\033[1;34m",
-                  "red": "\033[1;31m",
-                  "yellow": "\033[1;33m",
-                  "green": "\033[0;32m",
-                  "reset": "\033[0;0m"}
+        colors = common.add_colors()
 
         if self.is_water:
             sign = colors["blue"] + mark + colors["reset"]
@@ -25,6 +24,8 @@ class Square:
                 sign = colors["cyan"] + mark + colors["reset"]
             elif self.is_ship:
                 sign = colors["green"] + mark + colors["reset"]
+            if self.is_marked:
+                sign = colors["red"] + mark + colors["reset"]
 
         return sign
 
@@ -41,13 +42,19 @@ class Square:
 
         self.is_visible = True
 
+    def hide(self):
+
+        self.is_visible = False
+
     def make_border(self):
 
         self.is_border = True
 
     def __str__(self):
 
-        mark = "O"
+        mark = "-"
+        if self.is_ship:
+            mark = "S"
         if self.is_marked:
             mark = "X"
         elif self.is_border:
