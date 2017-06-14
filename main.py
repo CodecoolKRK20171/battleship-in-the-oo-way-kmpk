@@ -42,9 +42,14 @@ def check_end_game(player_1, player_2):
 
 
 def print_boards(board_1, board_2):
-    #
+
+    colors = {"blue": "\033[1;34m",
+              "yellow": "\033[1;33m",
+              "reset": "\033[0;0m"}
+
+    print(colors["yellow"] + "  * * * YOUR BOARD * * *  \n" + colors["reset"])
     print(board_1)
-    #
+    print(colors["yellow"] + " * * * ENEMY BOARD * * *  \n" + colors["reset"])
     print(board_2)
 
 

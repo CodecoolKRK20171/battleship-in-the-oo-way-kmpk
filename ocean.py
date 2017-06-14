@@ -40,8 +40,8 @@ class Ocean:
         for row in self.board2:
 
             row.insert(0, index)
-            row.insert(1, '|')
-            row.append('|')
+            row.insert(1, '║')
+            row.append('║')
             index += 1
 
     def __str__(self):
@@ -54,15 +54,16 @@ class Ocean:
             ocean: The playable area.
 
         """
+        board_lenght = 12
         ocean = ''
         index = 0
-        ocean += '  ABCDEFGHIJ \n'
-        ocean += ' ' + '-' * 12 + '\n'
+        ocean += '  ║ A B C D E F G H I J ║\n'
+        ocean += '══╬' + '══' * (board_lenght-2) + '═╣\n'
 
         for row in self.board2:
             for square in row:
-                ocean += str(square)
+                ocean += str(square) + " "
             ocean += '\n'
-        ocean += ' ' + '-' * 12 + '\n'
+        ocean += '══╩' + '══' * (board_lenght-2) + '═╝\n'
 
         return ocean
