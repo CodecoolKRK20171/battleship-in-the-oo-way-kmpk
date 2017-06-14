@@ -111,6 +111,7 @@ def add_ships_player(board, ships_list):
     if Ship.create_ship(start_position, direction, Ship.ships[name]):
         new_ship = Ship(start_position, direction, name)
         board.ships.append(new_ship)
+        system("clear")
         print("\nAye aye! {} succesfully placed!\n".format(name))
         del ships_list[name]
     else:

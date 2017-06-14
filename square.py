@@ -21,7 +21,7 @@ class Square:
             sign = colors["blue"] + mark + colors["reset"]
         if self.is_visible:
             if self.is_border:
-                sign = colors["cyan"] + mark + colors["reset"]
+                sign = colors["yellow"] + mark + colors["reset"]
             elif self.is_ship:
                 sign = colors["green"] + mark + colors["reset"]
             if self.is_marked:
@@ -54,13 +54,13 @@ class Square:
 
         mark = "."
         if self.is_ship:
-            mark = "S"
+            mark = "Θ"
         if self.is_marked:
             mark = "X"
         if self.is_border:
             mark = "*"
         if not self.is_visible:
-            mark = "-"
+            mark = "≈"
 
         colored_mark = self.apply_color(mark)
         return colored_mark
