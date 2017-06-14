@@ -10,10 +10,10 @@ class Ship:
         self.size = Ship.ships[name]
         self.start_position = start_position  # tuple
         self.is_horizontal = is_horizontal  # bool
-        self.coordinates = Ship.create_ship(self.start_position, self.is_horizontal, self.size)
+        self.coordinates = Ship.create_ship(self.start_position, self.is_horizontal, self.size)  # list of tuple
         self.sunk = False
-        Ship.taken_coord_list += self.coordinates
-
+        Ship.taken_coord_list += self.coordinates # adds coordinates of created ship to taken_coord_list
+        Ship.taken_coord_list += Ship.add_coord_around_ship(self.coordinates)
 
     def create_ship(start_position, is_horizontal, size):
         coordinates = []
@@ -26,9 +26,18 @@ class Ship:
 
         return coordinates
 
-    # def check_availability(coords_taken, coord_to_check):
-    #     for coord in coord_to_check:
-    #         if (coord not in coords_taken and coord
+    def check_availability(coords_taken, coord_to_check):
+        # params: lists of tuples
+        for coord in coord_to_check:
+            print(coord)
+            if coord not in coords_taken and \
+                    0 < coord[0] < 10 and \
+                    0 < coord[1] < 10:
+                result = True
+            else:
+                result = False
+
+        return result
 
     def add_coord_around_ship(coordinates):
         additional_coord = []
@@ -40,15 +49,6 @@ class Ship:
                         additional_coord.append(coord_to_add)
         return additional_coord
 
-
-# for i in range(-1,2):
-# #     print(i)
-# carrier = Ship((5, 0), True, "Destroyer")
-# battleship =Ship((7,1), False, "Submarine")
-# print("carrier", carrier.__dict__)
-# # print(battleship.__dict__)
-# # print(Ship.create_ship((5, 0), True, 3))
-# # print(Ship.create_ship((5, 0), False, 3))
-# # print ("Lista koordynatow uzytych" ,Ship.taken_coord_list)
-#
-# Ship.add_coord_around_ship(carrier.coordinates)
+# statek1 = Ship((5,1), True, "Submarine")
+# print(statek1.__dict__)
+# print (Ship.taken_coord_list)
