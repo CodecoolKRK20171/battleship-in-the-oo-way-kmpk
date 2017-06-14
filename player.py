@@ -9,8 +9,6 @@ class Player:
         self.is_alive = True
 
     def shoot_on_board(self, board, x, y):
-        # print(board.board)
-        # print(board.board[1][1])
         if board.board[y][x].is_ship:
             board.board[y][x].mark()
         else:
