@@ -57,8 +57,8 @@ def ask_for_positions():
         except ValueError:
             print(error_msg)
         else:
-            print(target, len(target), row in "abcdefghij", column in range(0, 10))
-            if len(target) == 2 and row in "abcdefghij" and column in range(0, 10):
+            print(target, len(target), row in "ABCDEFGHIJ", column in range(0, 10))
+            if len(target) == 2 and row in "ABCDEFGHIJ" and column in range(0, 10):
                 break
             else:
                 print(error_msg)
@@ -73,11 +73,11 @@ def main():
     while True:
         print_boards(board1, board2)
         # jakieś komunikaty, pytanie o pozycje
-        x, y = ask_for_positions()
-        shoot = player1.shoot_on_board(board2, x, y)
+        target = ask_for_positions()
+        shoot = player1.shoot_on_board(board2, target)
         # jakiś komunikat
-        x, y = ask_for_positions()
-        shoot = player2.shoot_on_board(board1, x, y)
+        target = ask_for_positions()
+        shoot = player2.shoot_on_board(board1, target)
         # jakiś komunikat
         check_end_game(player1, player2)
 
