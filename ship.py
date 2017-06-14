@@ -12,8 +12,9 @@ class Ship:
         self.is_horizontal = is_horizontal  # bool
         self.coordinates = Ship.create_ship(self.start_position, self.is_horizontal, self.size)  # list of tuple
         self.sunk = False
-        Ship.taken_coord_list += self.coordinates # adds coordinates of created ship to taken_coord_list
-        Ship.taken_coord_list += Ship.add_coord_around_ship(self.coordinates)
+        Ship.taken_coord_list += self.coordinates  # adds coordinates of created ship to Ship.taken_coord_list
+        surroundings = Ship.add_coord_around_ship(self.coordinates)  # coords of ships surroundings
+        Ship.add_coord_not_repetitive(Ship.taken_coord_list, surroundings)
 
     def create_ship(start_position, is_horizontal, size):
         coordinates = []
@@ -49,6 +50,10 @@ class Ship:
                         additional_coord.append(coord_to_add)
         return additional_coord
 
+    def add_coord_not_repetitive(taken_coord_list, coords_to_add):
+        for coord in coords_to_add:
+            if coord not in taken_coord_list:
+                taken_coord_list.append(coord)
 # statek1 = Ship((5,1), True, "Submarine")
 # print(statek1.__dict__)
 # print (Ship.taken_coord_list)
