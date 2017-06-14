@@ -25,8 +25,10 @@ class Ship:
             for i in range(size):
                 coordinates.append((start_position[0]+i, start_position[1]))
 
-        return coordinates
-
+        if check_availability(Ship.taken_coord_list, coordinates):
+            return coordinates
+        else:
+            return "Nie ma miejsca kurwa"
     def check_availability(coords_taken, coord_to_check):
         # params: lists of tuples
         for coord in coord_to_check:
