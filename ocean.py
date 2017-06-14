@@ -43,7 +43,8 @@ class Ocean:
             row.append('║')
             index += 1
 
-    def fill_ship
+    def fill_ship():
+        pass
 
     def __str__(self):
         """Prints out the ocean object.
