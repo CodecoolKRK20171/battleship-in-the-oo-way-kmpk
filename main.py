@@ -13,8 +13,8 @@ def create_game():
     # kreacja startowego boardu
     board_1 = Ocean(player_1)
     board_2 = Ocean(player_2)
-    board1.fill_board()
-    board2.fill_board()
+    board_1.fill_board()
+    board_2.fill_board()
 
     return board_1, board_2, player_1, player_2
 
