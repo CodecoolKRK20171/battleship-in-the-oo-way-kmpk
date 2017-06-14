@@ -1,6 +1,6 @@
 # from ocean import Ocean
 # from ship import Ship
-from random import randint
+from ai import AI
 
 
 class Player:
@@ -18,16 +18,8 @@ class Player:
             board.board[int(position[1])][letters[position[0]]].show()
 
     def shoot_on_board_ai(self, board):
-        position_x = randint(2, 11)
-        position_y = randint(0, 9)
-
-        print(position_x,position_y)
-
-        if board.board[position_y][position_x].is_ship:
-            board.board[position_y][position_x].mark()
-
-        else:
-            board.board[position_y][position_x].show()
+        ai = AI()
+        ai.shoot_on_board_ai(board)
 
     def is_alive(self, board):
         available_square_ship = 0

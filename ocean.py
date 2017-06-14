@@ -43,6 +43,7 @@ class Ocean:
             row.append('║')
             index += 1
 
+    def fill_ship():
         for ship in self.ships:
             for square in ship.coordinates:
                 print (square)

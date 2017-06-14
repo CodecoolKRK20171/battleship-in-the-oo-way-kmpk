@@ -5,9 +5,9 @@ from os import system
 import csv
 
 
-def read_ascii():
+def read_ascii(file_name):
 
-    with open('ship.csv', 'r') as f:
+    with open(file_name, 'r') as f:
         r = csv.reader(f)
         for row in r:
             print("".join(row))
@@ -81,9 +81,9 @@ def ask_for_name():
 
 def check_end_game(player_1, player_2):
     if not player_1.is_alive:
-        show_lose_screen()
+        read_ascii('lose_screen.csv')
     if not player_2.is_alive:
-        show_win_screen()
+        read_ascii('win_screen.csv')
 
 
 def print_boards(board_1, board_2):
@@ -133,10 +133,6 @@ def main():
         print_boards(board_1, board_2)
         handle_shooting_phase(board_1, board_2, player_1, player_2)
         check_end_game(player_1, player_2)
-
-
-def show_lose_screen():
-    pass
 
 
 if __name__ == "__main__":
