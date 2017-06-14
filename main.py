@@ -3,35 +3,67 @@ from player import Player
 
 
 def create_game():
-    # pytaj o ilość graczy
-    # pytaj o imię
-    player1 = Player("Gracz")
-    player2 = Player("AI")
+
+    determine_number_of_players()
+    player_name = ask_for_name()
+    player_1 = Player(player_name)
+    player_2 = Player("AI")
     # kreacja startowego boardu
-    board1 = Ocean(player1)
-    board2 = Ocean(player2)
+    board_1 = Ocean(player_1)
+    board_2 = Ocean(player_2)
 
-    return board1, board2, player1, player2
+    return board_1, board_2, player_1, player_2
 
 
-def check_end_game(player1, player2):
-    if not player1.is_alive:
+def determine_number_of_players():
+    print("Mornin' cap'n! How many players will battle? ")
+    while True:
+        game_mode = input("'1' for singleplayer, '2' for multiplayer ")
+        if game_mode == "1":
+            break
+        else:
+            print("Dammit! Unsupported game mode :(")
+
+
+def ask_for_name():
+    name = input("Ahoy! Wha' be yer name?")
+    return name
+
+
+def check_end_game(player_1, player_2):
+    if not player_1.is_alive:
         show_lose_screen()
-    if not player2.is_alive:
+    if not player_2.is_alive:
         show_win_screen()
 
 
-def print_boards(board1, board2):
-    # board1.fill_board()
-    print(board1)
-    # board2.fill_board()
-    print(board2)
+def print_boards(board_1, board_2):
+    #
+    print(board_1)
+    #
+    print(board_2)
 
 
 def ask_for_positions():
-    x = input("X ")
-    y = input("Y ")
-    return int(x), int(y)
+
+    error_msg = "Yo! Enter correct co-ordinates mate..."
+    while True:
+        target = input("Where do ye wants t' shoot? (eg. a1)")
+
+        try:
+            row, column = target[0], int(target[1])
+        except IndexError:
+            print(error_msg)
+        except ValueError:
+            print(error_msg)
+        else:
+            print(target, len(target), row in "abcdefghij", column in range(0, 10))
+            if len(target) == 2 and row in "abcdefghij" and column in range(0, 10):
+                break
+            else:
+                print(error_msg)
+
+    return target
 
 
 def main():
