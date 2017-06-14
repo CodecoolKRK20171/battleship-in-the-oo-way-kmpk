@@ -7,7 +7,6 @@ class Ocean:
         """Initialize function. Responsible for handling the playable area.
 
         Args:
-            self: Object carrying attribute.
             position: Position of a newly made ship.
 
         Returns:
@@ -21,7 +20,7 @@ class Ocean:
         """Fills the board with Square objects.
 
         Args:
-            self: Object carrying attribute.
+            none
 
         Returns:
             none
@@ -43,6 +42,8 @@ class Ocean:
             row.insert(1, '║')
             row.append('║')
             index += 1
+
+    def fill_ship
 
     def __str__(self):
         """Prints out the ocean object.

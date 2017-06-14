@@ -40,6 +40,10 @@ def determine_number_of_players():
     return game_mode
 
 
+def add_ships(board):
+    pass
+
+
 def ask_for_name():
     name = input("\nAhoy! Wha' be yer name?\n")
     return name
