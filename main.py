@@ -1,5 +1,6 @@
 from ocean import Ocean
 from player import Player
+from ship import Ship
 from os import system
 import csv
 
@@ -20,9 +21,11 @@ def create_game():
     player_name = ask_for_name()
     player_1 = Player(player_name)
     player_2 = Player("AI")
-    # kreacja startowego boardu
     board_1 = Ocean(player_1)
     board_2 = Ocean(player_2)
+    while Ship.ships:
+        name = add_ships(board_2)
+        del Ship.ships[name]
     board_1.fill_board()
     board_2.fill_board()
 
@@ -41,7 +44,32 @@ def determine_number_of_players():
 
 
 def add_ships(board):
-    pass
+    pos_x = int(input('Enter new ship X position: '))
+    while pos_x not in range(1, 11):
+        pos_x = int(input('Please enter a correct X position: '))
+    pos_y = int(input('Enter new ship Y position: '))
+    while pos_y not in range(1, 11):
+        pos_y = int(input('Please enter a correct Y position: '))
+
+    start_position = (pos_x, pos_y)
+
+    horizontal = input('Do you want the ship to be placed horizontallyt? (y/n): ')
+    while horizontal not in 'yn':
+        horizontal = input('Please enter the right option: ')
+
+    if horizontal == 'y':
+        horizontal = True
+    else:
+        horizontal = False
+
+    name = input('Choose the ship kind (Carrier, Battleship, Cruiser): ')
+    while name not in Ship.ships.keys():
+        name = input('Enter the right ship name: ')
+
+    ship1 = Ship(start_position, horizontal, name)
+    board.ships.append(ship1)
+
+    return name
 
 
 def ask_for_name():
