@@ -17,7 +17,7 @@ class Player:
         else:
             board.board[int(position[1])][letters[position[0]]].show()
 
-    def AI(self):
+    def AI(self,board):
         position_x = random.randint(1, 11)
         position_y = random.randint(1, 11)
 
