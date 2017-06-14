@@ -46,12 +46,20 @@ class Ocean:
 
         """
         ocean = ''
+        index = 0
+        ocean += '  ABCDEFGHIJ \n'
+        ocean += ' ' + '-' * 12 + '\n'
 
         for row in self.board:
-            ocean += '|'
+
+            row.insert(0, index)
+            row.insert(1, '|')
             row.insert(-1, '|')
+            index += 1
+
             for square in row:
                 ocean += str(square)
-'
+
+        ocean += ' ' + '-' * 12 + '\n'
 
         return ocean

@@ -1,5 +1,5 @@
 # Plan:
-# 
+#
 
 
 from ocean import Ocean
@@ -69,6 +69,8 @@ def handle_game():
 
 
 def main():
+
+    menu()
 
     handle_game()
 
