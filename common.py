@@ -15,6 +15,16 @@ def convert_coords(coord):
     return position_x, position_y
 
 
+def convert_coords_reverse(coord):
+
+    if coord != "Nothing":
+        position_x = "ABCDEFGHIJ"[coord[0]]
+        position_y = str(coord[1])
+        return position_x + position_y
+    else:
+        return coord
+
+
 def add_colors():
 
     colors = {"blue": "\033[1;34m",

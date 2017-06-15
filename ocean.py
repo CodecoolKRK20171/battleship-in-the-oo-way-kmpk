@@ -1,5 +1,4 @@
 from square import Square
-from copy import deepcopy
 
 
 class Ocean:
@@ -39,14 +38,33 @@ class Ocean:
             self.board.append(temp_list)
 
     def fill_ship(self):
+
         for ship in self.ships:
             for coords in ship.coordinates:
                 self.board[coords[1]][coords[0]].make_ship()
 
-    # def hide_enemy(self):
-    #     for ship in self.ships:
-    #         for square in ship.coordinates:
-    #             self.board[square[1]][square[0]].hide()
+    def check_if_sunk(self, player):
+
+        for ship in self.ships:
+            for coords in ship.coordinates:
+                if not self.board[coords[1]][coords[0]].is_marked:
+                    break
+            else:
+                ship.sunk_a_ship()
+                self.make_borders(ship)
+                player.check_if_alive(self)
+
+    def make_borders(self, ship):
+
+        for coords in ship.border:
+
+            try:
+                target = self.board[coords[1]][coords[0]]
+            except IndexError:
+                pass
+            else:
+                target.make_border()
+                target.show()
 
     def __str__(self):
         """Prints out the ocean object.

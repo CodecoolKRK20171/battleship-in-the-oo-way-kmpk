@@ -39,7 +39,6 @@ def set_up_board(battlefield, player):
     if player.name == "AI" or player.name == "Cheat":
         Ship.set_lists_to_default()
         ships_list = Ship.ships
-        print("nazwy", ships_list)
         while ships_list:
             add_ships_ai(battlefield, ships_list)
             battlefield.fill_ship()
@@ -80,10 +79,7 @@ def chose_direction():
     while choice not in 'yn':
         choice = input('Please enter the right option: ')
 
-    if choice == 'y':
-        return True
-    else:
-        return False
+    return True if choice == 'y' else False
 
 
 def choose_name():
@@ -138,18 +134,17 @@ def ask_for_name():
 
     while True:
         name = input("\nAhoy! Wha' be yer name?\n")
-        # if name != "AI":
-        #     return name
-        return name
+        if name != "AI":
+            return name
 
 
 def check_end_game(player_1st, player_2nd):
     if not player_1st.is_alive:
         read_ascii('lose_screen.csv')
-        sys.exit()
+        exit()
     if not player_2nd.is_alive:
         read_ascii('win_screen.csv')
-        sys.exit()
+        exit()
 
 
 def print_boards(battlefield_1st, battlefield_2nd):
@@ -160,6 +155,8 @@ def print_boards(battlefield_1st, battlefield_2nd):
     print(battlefield_1st)
     print(colors["yellow"] + " * * * ENEMY BOARD * * *  \n" + colors["reset"])
     print(battlefield_2nd)
+    previous_shot_target = common.convert_coords_reverse(battlefield_2nd.owner.previous_shot)
+    print("\nAhoy! Last turn yer squrvy enemy shot at {}\n".format(previous_shot_target))
 
 
 def ask_for_positions():
@@ -176,7 +173,9 @@ def ask_for_positions():
 def handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd):
     target = ask_for_positions()
     player_1st.shoot_on_board_player(battlefield_2nd, target)
+    battlefield_2nd.check_if_sunk(player_2nd)
     ai_target = player_2nd.shoot_on_board_ai(battlefield_1st)
+    battlefield_1st.check_if_sunk(player_1st)
     # print("AI shot on {} {}".format(ai_target[0], ai_target[1]))
 
 
@@ -187,6 +186,8 @@ def main():
         system("clear")
         print_boards(battlefield_1st, battlefield_2nd)
         handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd)
+        # print([(ship.size, ship.sunk) for ship in battlefield_2nd.ships])
+        # print([(ship.size, ship.sunk) for ship in battlefield_1st.ships])
         check_end_game(player_1st, player_2nd)
 
 

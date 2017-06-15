@@ -11,7 +11,7 @@ class AI:
         position_x = randint(0, 9)
         position_y = randint(0, 9)
 
-        print(position_x, position_y)
+        # print(position_x, position_y)
         target = battlefield.board[position_y][position_x]
 
         if target.is_ship:
@@ -20,7 +20,7 @@ class AI:
 
         else:
             self.unmarked.append(target)
-            print(target)
+            # print(target)
             target.make_border()
 
         return (position_x, position_y)

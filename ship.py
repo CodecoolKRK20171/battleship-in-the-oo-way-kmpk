@@ -8,7 +8,6 @@ class Ship:
     taken_coord_list = []  # lista tupli koordynatow ktore sa zakazane
 
     def __init__(self, start_position, is_vertical, name):
-        print("taken coord ship before created", Ship.taken_coord_list)
 
         self.sunk = False
         self.size = Ship.ships[name]
@@ -19,7 +18,6 @@ class Ship:
         self.border = surroundings
         Ship.add_coord_not_repetitive(Ship.taken_coord_list, self.coordinates)
         Ship.add_coord_not_repetitive(Ship.taken_coord_list, self.border)
-        print("taken coord ship after created", Ship.taken_coord_list)
 
     def create_ship(start_position, is_vertical, size):
         coordinates = []
@@ -42,7 +40,6 @@ class Ship:
                     coord[0] not in range(0, 10) or \
                     coord[1] not in range(0, 10):
                 return False
-            print("Powinny być dobre: ", coord)
         return True
 
     def add_coord_around_ship(coordinates):
@@ -56,8 +53,11 @@ class Ship:
                             0 <= coord_to_add[0] <= 10 and \
                             0 <= coord_to_add[1] <= 10:
                         additional_coord.append(coord_to_add)
-
         return additional_coord
+
+    def sunk_a_ship(self):
+
+        self.sunk = True
 
     def add_coord_not_repetitive(taken_coord_list, coords_to_add):
         for coord in coords_to_add:

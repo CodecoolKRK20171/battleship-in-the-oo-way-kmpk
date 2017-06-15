@@ -58,7 +58,7 @@ class Square:
         if self.is_marked:
             mark = "X"
         if self.is_border:
-            mark = "*"
+            mark = "x"
         if not self.is_visible:
             mark = "≈"
 
