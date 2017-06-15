@@ -50,8 +50,8 @@ class Ship:
                     coord_to_add = (coord[0]+x, coord[1]+y)
                     if coord_to_add not in additional_coord and \
                             coord_to_add not in coordinates and \
-                            0 <= coord_to_add[0] <= 10 and \
-                            0 <= coord_to_add[1] <= 10:
+                            coord[0] in range(0, 10) and \
+                            coord[1] in range(0, 10):
                         additional_coord.append(coord_to_add)
         return additional_coord
 
