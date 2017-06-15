@@ -9,16 +9,18 @@ class Ship:
     taken_coord_list = []  # lista tupli koordynatow ktore sa zakazane
 
     def __init__(self, start_position, is_vertical, name):
+        print("taken coord ship before created",Ship.taken_coord_list)
 
+        self.sunk = False
         self.size = Ship.ships[name]
         self.start_position = start_position  # tuple
         self.is_vertical = is_vertical  # bool
         self.coordinates = Ship.create_ship(self.start_position, self.is_vertical, self.size)  # list of tuple
-        self.sunk = False
         surroundings = Ship.add_coord_around_ship(self.coordinates)  # coords of ships surroundings
         self.border = surroundings
-        Ship.taken_coord_list += self.coordinates  # adds coordinates of created ship to Ship.taken_coord_list
-        Ship.add_coord_not_repetitive(Ship.taken_coord_list, surroundings)
+        Ship.add_coord_not_repetitive(Ship.taken_coord_list, self.coordinates)
+        Ship.add_coord_not_repetitive(Ship.taken_coord_list, self.border)
+        print("taken coord ship after created",Ship.taken_coord_list)
 
     def create_ship(start_position, is_vertical, size):
         coordinates = []
@@ -33,15 +35,13 @@ class Ship:
             return coordinates
         else:
             return False
-            return Ship.taken_coord_list[0]
 
     def check_availability(coords_taken, coord_to_check):
         # params: lists of tuples
         for coord in coord_to_check:
-            # print(coord)
             if coord not in coords_taken and \
-                    0 <= coord[0] < 10 and \
-                    0 <= coord[1] < 10:
+                    0 <= coord[0] <= 10 and \
+                    0 <= coord[1] <= 10:
                 result = True
             else:
                 result = False
@@ -55,9 +55,11 @@ class Ship:
                 for y in range(-1, 2, 1):
                     coord_to_add = (coord[0]+x, coord[1]+y)
                     if coord_to_add not in additional_coord and \
-                            coord_to_add not in coordinates:
+                            coord_to_add not in coordinates and \
+                            0 <= coord_to_add[0] <= 10 and \
+                            0 <= coord_to_add[1] <= 10:
                         additional_coord.append(coord_to_add)
-        print("dodatkoweg", additional_coord)
+
         return additional_coord
 
     def add_coord_not_repetitive(taken_coord_list, coords_to_add):
@@ -73,5 +75,3 @@ class Ship:
                      "Submarine": 3,
                      "Destroyer": 2}
         cls.taken_coord_list = []
-
-# todo, lista tupli koordynatow ktore sa wokol statku ale nie moga byc poza plansza
