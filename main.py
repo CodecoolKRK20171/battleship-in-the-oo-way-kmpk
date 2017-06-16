@@ -1,6 +1,7 @@
 from ocean import Ocean
 from player import Player
 from ship import Ship
+from ai import AI
 from os import system
 import csv
 import common
@@ -19,8 +20,9 @@ def create_game():
 
     system("clear")
     read_ascii('ship.csv')
-    # determine_number_of_players()
+    determine_number_of_players()
     player_name = ask_for_name()
+    ask_for_difficulty()
     player_1st = Player(player_name)
     player_2nd = Player("AI")
     battlefield_1st = Ocean(player_1st)
@@ -62,15 +64,26 @@ def determine_number_of_players():
     return game_mode
 
 
+def ask_for_difficulty():
+
+    while True:
+        difficulty = input("\nHaaarr. What difficulty ye wants? (easy, medium, hard): ")
+        if difficulty in ["easy", "meadium" "hard"]:
+            AI.set_difficulty(difficulty)
+            break
+        else:
+            print("\n Dammit! Unsupported game mode :(\n")
+
+
 def choose_positions():
 
     while True:
         choice = input("\nPick a starting point (eg. a1) ")
-        if choice in common.get_possible_coords():
+        if choice.lower() in common.get_possible_coords():
             break
         else:
             print("\nYo! That's nah a proper input dude...\n")
-    return choice
+    return choice.lower()
 
 
 def chose_direction():
@@ -176,7 +189,6 @@ def handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2
     battlefield_2nd.check_if_sunk(player_2nd)
     ai_target = player_2nd.shoot_on_board_ai(battlefield_1st)
     battlefield_1st.check_if_sunk(player_1st)
-    # print("AI shot on {} {}".format(ai_target[0], ai_target[1]))
 
 
 def main():
@@ -186,8 +198,6 @@ def main():
         system("clear")
         print_boards(battlefield_1st, battlefield_2nd)
         handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd)
-        # print([(ship.size, ship.sunk) for ship in battlefield_2nd.ships])
-        # print([(ship.size, ship.sunk) for ship in battlefield_1st.ships])
         check_end_game(player_1st, player_2nd)
 
 
