@@ -18,7 +18,7 @@ class Square:
         """
         self.row = row
         self.column = column
-        self.is_visible = True#is_visible
+        self.is_visible = is_visible
         self.is_marked = False
         self.is_water = True
         self.is_ship = False
