@@ -3,6 +3,8 @@ from random import randint
 
 
 class AI:
+    """Class responsible for the second player shooting"""
+
     def __init__(self):
         """Initialize function. Createas attributes needed for AI.
 
