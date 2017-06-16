@@ -26,6 +26,11 @@ class AI:
         if self.difficulty == "easy":
             self.shooted_target = []
 
+        if self.difficulty == "hard":
+            target = battlefield.board[randint(0, 9)][randint(0, 9)]
+            if not target.is_ship:
+                self.shooted_target.append(target)
+
         """AI shooting function.
 
         Args:
