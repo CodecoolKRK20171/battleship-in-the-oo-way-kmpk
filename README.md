@@ -10,6 +10,9 @@ __main.py__
 ###BATTLESHIPS
 
 
+
+
+
 __square.py__
 
 ### Class Square
@@ -31,6 +34,20 @@ __Attributes__
 * `is_visible`
   - data: bool
   - description: True if square should be visible on board, False otherwise. Default is False
+
+* `is_water`
+    - data: bool
+    - description: True if square should be visible on board, False otherwise. Default is False
+
+* `is_ship`
+  - data: bool
+  - description: True if square should be visible on board, False otherwise. Default is False
+
+
+* `is_boarder`
+    - data: bool
+    - description: True if square should be visible on board, False otherwise. Default is False
+
 
 __Instance methods__
 

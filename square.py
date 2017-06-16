@@ -111,7 +111,7 @@ class Square:
         Returns:
             none
 
-        """"
+        """
         self.is_border = True
 
     def __str__(self):
