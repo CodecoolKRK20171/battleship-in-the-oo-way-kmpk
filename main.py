@@ -6,6 +6,7 @@ from os import system
 import csv
 import common
 import random
+from time import sleep
 
 
 def read_ascii(file_name):
@@ -20,7 +21,7 @@ def create_game():
 
     system("clear")
     read_ascii('ship.csv')
-    determine_number_of_players()
+    players = determine_number_of_players()
     player_name = ask_for_name()
     ask_for_difficulty()
     player_1st = Player(player_name)
@@ -33,7 +34,7 @@ def create_game():
     battlefield_2nd.fill_board()
     set_up_board(battlefield_2nd, player_2nd)
 
-    return battlefield_1st, battlefield_2nd, player_1st, player_2nd
+    return battlefield_1st, battlefield_2nd, player_1st, player_2nd, players
 
 
 def set_up_board(battlefield, player):
@@ -57,7 +58,7 @@ def determine_number_of_players():
     print("\nMornin' cap'n! How many players will battle? ")
     while True:
         game_mode = input("\n'1' for singleplayer, '2' for multiplayer\n")
-        if game_mode == "1":
+        if game_mode in ["1", "2"]:
             break
         else:
             print("\n Dammit! Unsupported game mode :(\n")
@@ -183,21 +184,28 @@ def ask_for_positions():
     return target
 
 
-def handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd):
-    target = ask_for_positions()
-    player_1st.shoot_on_board_player(battlefield_2nd, target)
-    battlefield_2nd.check_if_sunk(player_2nd)
-    ai_target = player_2nd.shoot_on_board_ai(battlefield_1st)
-    battlefield_1st.check_if_sunk(player_1st)
+def handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd, players):
+    if players == "1":
+        target = ask_for_positions()
+        player_1st.shoot_on_board_player(battlefield_2nd, target)
+        battlefield_2nd.check_if_sunk(player_2nd)
+        ai_target = player_2nd.shoot_on_board_ai(battlefield_1st)
+        battlefield_1st.check_if_sunk(player_1st)
+    if players == "2":
+        ai_target_1 = player_1st.shoot_on_board_ai(battlefield_2nd)
+        battlefield_2nd.check_if_sunk(player_2nd)
+        ai_target_2 = player_2nd.shoot_on_board_ai(battlefield_1st)
+        battlefield_1st.check_if_sunk(player_1st)
+        sleep(0.2)
 
 
 def main():
 
-    battlefield_1st, battlefield_2nd, player_1st, player_2nd = create_game()
+    battlefield_1st, battlefield_2nd, player_1st, player_2nd, players = create_game()
     while True:
         system("clear")
         print_boards(battlefield_1st, battlefield_2nd)
-        handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd)
+        handle_shooting_phase(battlefield_1st, battlefield_2nd, player_1st, player_2nd, players)
         check_end_game(player_1st, player_2nd)
 
 
