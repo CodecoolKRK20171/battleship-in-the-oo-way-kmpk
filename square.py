@@ -52,15 +52,15 @@ class Square:
 
     def __str__(self):
 
-        mark = "."
+        mark = "╶"  # -
         if self.is_ship:
-            mark = "Θ"
+            mark = "▢"  # Θ
         if self.is_marked:
-            mark = "X"
+            mark = "⊠"  # ◼ ✔ X
         if self.is_border:
-            mark = "x"
+            mark = "☼"  # x *
         if not self.is_visible:
-            mark = "≈"
+            mark = "⟡"  # ≈
 
         colored_mark = self.apply_color(mark)
         return colored_mark

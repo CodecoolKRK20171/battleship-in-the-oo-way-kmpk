@@ -9,7 +9,7 @@ def get_possible_coords():
 
 def convert_coords(coord):
 
-    position_x = "abcdefghij".index(coord[0])
+    position_x = "abcdefghij".index(coord[0].lower())
     position_y = int(coord[1])
 
     return position_x, position_y

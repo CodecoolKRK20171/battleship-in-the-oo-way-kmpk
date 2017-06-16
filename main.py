@@ -150,20 +150,20 @@ def check_end_game(player_1st, player_2nd):
 def print_boards(battlefield_1st, battlefield_2nd):
 
     colors = common.add_colors()
+    previous_shot_target = common.convert_coords_reverse(battlefield_2nd.owner.previous_shot)
 
     print(colors["yellow"] + "  * * * YOUR BOARD * * *  \n" + colors["reset"])
     print(battlefield_1st)
     print(colors["yellow"] + " * * * ENEMY BOARD * * *  \n" + colors["reset"])
     print(battlefield_2nd)
-    previous_shot_target = common.convert_coords_reverse(battlefield_2nd.owner.previous_shot)
-    print("\nAhoy! Last turn yer squrvy enemy shot at {}\n".format(previous_shot_target))
+    print("\nAhoy. Last turn yer squrvy enemy shot at {}\n".format(previous_shot_target))
 
 
 def ask_for_positions():
 
     while True:
         target = input("Where do ye wants t' shoot? (eg. a1)\n")
-        if target in common.get_possible_coords():
+        if target.lower() in common.get_possible_coords():
             break
         else:
             print("\nYo! Enter correct coords mate...\n")
