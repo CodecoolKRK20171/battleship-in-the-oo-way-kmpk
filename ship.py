@@ -46,8 +46,8 @@ class Ship:
         additional_coord = []
         for coord in coordinates:
             for x in range(-1, 2):
-                for y in range(-1, 2, 1):
-                    coord_to_add = (coord[0]+x, coord[1]+y)
+                for y in range(-1, 2):
+                    coord_to_add = (max(coord[0]+x, 0), max(coord[1]+y, 0))  # zeby pudlo nie przechodzilo przez mape
                     if coord_to_add not in additional_coord and \
                             coord_to_add not in coordinates and \
                             coord[0] in range(0, 10) and \
