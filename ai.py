@@ -5,6 +5,16 @@ from random import randint
 class AI:
 
     def __init__(self, difficulty="medium"):
+        """Initialize function. Createas attributes needed for AI.
+
+        Args:
+            none
+
+        Returns:
+            none
+
+        """
+
         self.marked = []
         self.unmarked = []
         self.shooted_target = []
@@ -15,6 +25,16 @@ class AI:
         if self.difficulty == "easy":
             self.shooted_target = []
 
+        """AI shooting function.
+
+        Args:
+            battlefield: Playable area. List of lists of square objects.
+
+        Returns:
+            position_x: X coordinate of the shoot made by AI.
+            position_y: Y coordinate of the shoot made by AI.
+
+        """
         position_x = randint(0, 9)
         position_y = randint(0, 9)
         target = battlefield.board[position_y][position_x]
