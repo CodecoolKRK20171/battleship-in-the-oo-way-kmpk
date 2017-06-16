@@ -68,7 +68,7 @@ def ask_for_difficulty():
 
     while True:
         difficulty = input("\nHaaarr. What difficulty ye wants? (easy, medium, hard): ")
-        if difficulty in ["easy", "meadium" "hard"]:
+        if difficulty in ["easy", "medium", "hard"]:
             AI.set_difficulty(difficulty)
             break
         else:
