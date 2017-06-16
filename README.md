@@ -69,6 +69,21 @@ __Instance methods__
   Returns a formatted string of * Square * depending on its attributes.
   "X" for marked, "O" for unmarked, " " for hidden
 
+* `apply_color(self,mark)`
+
+    Return colored square
+
+* `make_ship(self)`
+
+    Sets is_visible atribute to True
+
+* `hide(self)`
+
+    Sets is_visible atribute to False
+
+* `make_boarder(self)`
+    Sets is_boarder atribute to True
+
 
 
 __ship.py__
@@ -81,7 +96,7 @@ __Attributes__
     - data: int
     - description: lenght of ship
 
-* ` is_horizontal`
+* ` is_vertical`
     - data: boolean
     - description: determinates direction of ship
 
@@ -96,6 +111,12 @@ __Attributes__
 * `coordinates`
     - data: list of tuples
     - description: taken coordinates by ship
+
+
+* `border`
+    - data: list of tuples
+    - description: list tuples around the ship
+
 
 __class Attributes__
 
@@ -112,9 +133,31 @@ __Instance methods__
 
 * ##### ` __init__(self, start_position, is_horizontal, name)`
 
-
     Constructs a Ship object
 
+* `create_ship(start_position, is_vertical, size)`
+
+    create ships coordinates
+
+* `check_availability(coords_taken, coord_to_check)`
+    checks if the ship can be placed in the given coordinates
+
+
+* `add_coord_around_ship(coordinates)`
+
+    adds unshootable coordinates around the sunk ship
+
+* `sunk_a_ship(self)`
+
+    sets sunk atribute to True
+
+* `add_coord_not_repetitive(taken_coord_list, coords_to_add)`
+
+    create a list of already taken coordinates
+
+* `set_lists_to_default(cls)`
+
+    create a list of the possible ships
 
 __ocean.py__
 
@@ -132,6 +175,9 @@ __Attributes__
   - data: list
   - description: List of lists, containing playable area.
 
+* `owner`
+    - data: String
+    - String with the name of the owner
 
 __Instance methods__
 
@@ -140,12 +186,69 @@ __Instance methods__
   Constructs an ocean object. Raises and IndexError if the position is
   out of range of the board attribute.
 
-* `add_ship(self, x, y, size, horizontal=False)`
-
-  Adds a ship of given size, on a given position.
-  Parameter horizontal is responsible for creating a ship
-  in a horizontal position, and is set to False by default.
 
 * `fill_board(self)`
 
   Fills the board attribute with playable area and objects.
+
+* `fill_ship(self)`
+
+    changes square objects to ships
+
+* `check_if_sunk(self,player)`
+
+    checks if the given ship is sunk
+
+* `make_boarder(self, ship)`
+    create border around the sunk ships
+
+* `__str__(self)`
+
+    prints out the ocean objects
+
+__player.py__
+###Class player
+
+__attributes__
+
+* `name`
+- data:string
+- description:Player name
+
+* `is_alive`
+- data:bool
+- description:True or False
+
+
+* `previous_shot`
+- data:string
+- description:
+
+
+__Instance methods__
+
+* ##### ` __init__(self)`
+    user_ship_list = []
+
+    Constructs an list with objects ships
+
+
+* `shoot_on_board_player(self, battlefield, coords)`
+
+    player shooting method
+
+* `shoot_on_board_player(self, board)`
+
+    AI shooting method
+
+* `check_if_alive(self, board)`
+
+    Checks if the player ships are sunk
+
+* `__str__(self)`
+    print user name
+
+
+* `is_a_life`
+
+    checking users life
