@@ -3,6 +3,8 @@ import common
 
 
 class Player:
+    """Class responsible for handling the player.
+        His ships, is he alive or not, shooting. """
 
     def __init__(self, name):
         """Initialize function for the Player class.

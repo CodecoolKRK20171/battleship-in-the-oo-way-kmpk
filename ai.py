@@ -3,6 +3,7 @@ from random import randint
 
 
 class AI:
+    """Class responsible for the second player shooting"""
 
     shooted_target = []
     difficulty = "medium"

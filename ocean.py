@@ -2,6 +2,7 @@ from square import Square
 
 
 class Ocean:
+    """Class responsible for drawing and handling the playable area"""
 
     def __init__(self, owner):
         """Initialize function. Responsible for handling the playable area.
