@@ -4,7 +4,10 @@ from random import randint
 
 class AI:
 
-    def __init__(self, difficulty="medium"):
+    shooted_target = []
+    difficulty = "medium"
+
+    def __init__(self):
         """Initialize function. Createas attributes needed for AI.
 
         Args:
@@ -17,8 +20,6 @@ class AI:
 
         self.marked = []
         self.unmarked = []
-        self.shooted_target = []
-        self.difficulty = difficulty
 
     def shoot_on_board_ai(self, battlefield):
 
