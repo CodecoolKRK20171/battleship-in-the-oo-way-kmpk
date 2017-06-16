@@ -28,9 +28,27 @@ class AI:
             self.shooted_target = []
 
         if self.difficulty == "hard":
-            target = battlefield.board[randint(0, 9)][randint(0, 9)]
-            if not target.is_ship:
-                self.shooted_target.append(target)
+            target_1 = battlefield.board[randint(0, 9)][randint(0, 9)]
+            target_2 = battlefield.board[randint(0, 9)][randint(0, 9)]
+            if not target_1.is_ship:
+                self.shooted_target.append(target_1)
+            if not target_2.is_ship:
+                self.shooted_target.append(target_2)
+
+        if self.difficulty == "nightmare":
+            while True:
+                target_1 = battlefield.board[randint(0, 9)][randint(0, 9)]
+                target_2 = battlefield.board[randint(0, 9)][randint(0, 9)]
+                target_3 = battlefield.board[randint(0, 9)][randint(0, 9)]
+                if not target_1.is_ship and target_1 not in self.shooted_target and \
+                   not target_2.is_ship and target_2 not in self.shooted_target and \
+                   not target_3.is_ship and target_3 not in self.shooted_target:
+                    self.shooted_target.append(target_1)
+                    self.shooted_target.append(target_2)
+                    self.shooted_target.append(target_3)
+                    break
+                elif len(self.shooted_target) > 90:
+                    break
 
         """AI shooting function.
 

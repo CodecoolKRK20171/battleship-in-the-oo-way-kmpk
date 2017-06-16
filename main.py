@@ -67,8 +67,8 @@ def determine_number_of_players():
 def ask_for_difficulty():
 
     while True:
-        difficulty = input("\nHaaarr. What difficulty ye wants? (easy, medium, hard): ")
-        if difficulty in ["easy", "medium", "hard"]:
+        difficulty = input("\nHaaarr. What difficulty ye wants? (easy, medium, hard, nightmare): ")
+        if difficulty in ["easy", "medium", "hard", "nightmare"]:
             AI.set_difficulty(difficulty)
             break
         else:
